@@ -32,10 +32,15 @@ Create a new database
 ```bash
 CREATE DATABASE mydatabase;
 ```
+Change the database owner to the new user
+```bash
+ALTER DATABASE mydatabase OWNER TO myuser;
+```
 Grant privileges to the user
 ```bash
 GRANT ALL PRIVILEGES ON DATABASE mydatabase TO myuser;
 ```
+
 Exit psql
 ```bash
 \q

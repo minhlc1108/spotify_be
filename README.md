@@ -22,7 +22,7 @@ pip install -r requirements.txt
 ### 4. Setup Database
 Login to PostgreSQL
 ```bash
-sudo -i -u postgres
+sudo -u postgres psql
 ```
 Create a new user
 ```bash

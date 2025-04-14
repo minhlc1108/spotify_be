@@ -20,9 +20,25 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 ### 4. Setup Database
+Login to PostgreSQL
 ```bash
-psql -U postgres
-CREATE DATABASE spotify_clone;
+sudo -i -u postgres
+```
+Create a new user
+```bash
+CREATE USER myuser WITH PASSWORD 'mypassword';
+```
+Create a new database
+```bash
+CREATE DATABASE mydatabase;
+```
+Grant privileges to the user
+```bash
+GRANT ALL PRIVILEGES ON DATABASE mydatabase TO myuser;
+```
+Exit psql
+```bash
+\q
 ```
 ### 5. Configure environment variables
 Create a `.env` file in the root directory based on the `.env.example` file provided.

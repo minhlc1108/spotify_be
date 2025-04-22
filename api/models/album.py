@@ -22,7 +22,6 @@ class Album(models.Model):
         return f"{self.title} - {self.artists.first().name}"
 
     class Meta:
-        db_table = "album"
         ordering = ["release_date"]
         indexes = [
             models.Index(fields=["title"]),

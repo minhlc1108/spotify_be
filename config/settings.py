@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 import environ
 import os
@@ -55,10 +56,38 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
     "api",
     "storages",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    )
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
+
+AUTH_USER_MODEL = "api.User"
+
+# CSRF_TRUSTED_ORIGINS = [
+#     "http://localhost:3000",
+# ]
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8000",  # địa chỉ React/Vue dev server
+# ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -99,8 +128,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {"default": env.db("DATABASE_URL")}
 
 
-# Auth
-AUTH_USER_MODEL = "api.User"
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

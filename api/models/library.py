@@ -18,4 +18,6 @@ class Library(models.Model):
     )
 
     class Meta:
-        db_table = "library"
+        indexes = [
+            models.Index(fields=["user"]),
+        ]

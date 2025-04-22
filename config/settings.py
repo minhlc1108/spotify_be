@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "api",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -98,6 +99,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {"default": env.db("DATABASE_URL")}
 
 
+# Auth
+AUTH_USER_MODEL = "api.User"
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

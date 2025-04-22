@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 import uuid
 
 
@@ -14,10 +15,11 @@ class Track(models.Model):
     album = models.ForeignKey(
         "Album", on_delete=models.SET_NULL, null=True, blank=True, related_name="tracks"
     )
-    artists = models.ManyToManyField("Artist", related_name="tracks_artists")
-    genres = models.ManyToManyField("Genre", related_name="tracks_genres")
+    artists = models.ManyToManyField("Artist", related_name="tracks")
+    genres = models.ManyToManyField("Genre", related_name="tracks")
     play_count = models.PositiveBigIntegerField(default=0)
-    release_date = models.DateField()
+    duration = models.PositiveBigIntegerField(default=0)
+    release_date = models.DateField(default=timezone.now)
 
     def __str__(self):
         return f"{self.title} - {self.artists.first().name}"
@@ -27,5 +29,6 @@ class Track(models.Model):
         ordering = ["release_date"]
         indexes = [
             models.Index(fields=["title"]),
+            models.Index(fields=["play_count"]),
             models.Index(fields=["release_date"]),
         ]

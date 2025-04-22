@@ -21,7 +21,6 @@ class Playlist(models.Model):
         return f"{self.title} - {self.owner.first().display_name}"
 
     class Meta:
-        db_table = "playlist"
         ordering = ["created_at"]
         indexes = [
             models.Index(fields=["title"]),

@@ -11,7 +11,6 @@ class PlayHistory(models.Model):
     played_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = "play_history"
         ordering = ["-played_at"]
         indexes = [
             models.Index(fields=["user"]),

@@ -12,4 +12,6 @@ class Genre(models.Model):
         return self.name
 
     class Meta:
-        db_table = "genre"
+        indexes = [
+            models.Index(fields=["name"]),
+        ]

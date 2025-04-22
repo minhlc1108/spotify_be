@@ -21,5 +21,4 @@ class Artist(models.Model):
         return self.name
 
     class Meta:
-        db_table = "artist"
         ordering = ["created_at"]

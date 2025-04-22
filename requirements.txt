@@ -8,6 +8,7 @@ django-cors-headers==4.3.1
 django-environ==0.12.0
 django-storages==1.14.6
 djangorestframework==3.14.0
+djangorestframework-simplejwt==5.2.2
 jmespath==1.0.1
 mypy-extensions==1.0.0
 packaging==24.2
@@ -15,9 +16,11 @@ pathspec==0.12.1
 pillow==11.2.1
 platformdirs==4.3.7
 psycopg2-binary==2.9.9
+PyJWT==2.10.1
 python-dateutil==2.9.0.post0
 pytz==2025.2
 s3transfer==0.11.4
+setuptools==79.0.0
 six==1.17.0
 sqlparse==0.5.3
 urllib3==2.4.0

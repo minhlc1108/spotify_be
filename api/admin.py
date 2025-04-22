@@ -1,5 +1,6 @@
 from django.contrib import admin
 from api.models import Artist, Album, Genre, Track
+from api.models.user import User
 
 # Register your models here.
 

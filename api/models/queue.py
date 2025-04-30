@@ -3,9 +3,6 @@ from django.db import models
 
 class Queue(models.Model):
     user = models.OneToOneField("User", on_delete=models.CASCADE, related_name="queue")
-    current_track = models.ForeignKey(
-        "Track", on_delete=models.SET_NULL, null=True, blank=True
-    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     @property

@@ -6,6 +6,18 @@ from api.validators import validate_image
 
 class AlbumSerializer(serializers.ModelSerializer):
     artists = SimpleArtistSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Album
+        fields = "__all__"
+
+    def validate_cover_image(self, value):
+        validate_image(value)
+        return value
+
+
+class AlbumDetailSerializer(serializers.ModelSerializer):
+    artists = SimpleArtistSerializer(many=True, read_only=True)
     tracks = SimpleTrackSerializer(many=True, read_only=True)
 
     class Meta:

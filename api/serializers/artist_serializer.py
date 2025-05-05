@@ -5,12 +5,22 @@ from api.validators import validate_image
 
 
 class ArtistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Artist
+        fields = "__all__"
+
+    def validate_image(self, value):
+        validate_image(value)
+        return value
+
+
+class ArtistDetailSerializer(serializers.ModelSerializer):
     tracks = SimpleTrackSerializer(many=True, read_only=True)
     albums = SimpleAlbumSerializer(many=True, read_only=True)
 
     class Meta:
         model = Artist
-        fields = ["id", "name", "image", "bio", "tracks", "gender", "albums"]
+        fields = "__all__"
 
     def validate_image(self, value):
         validate_image(value)

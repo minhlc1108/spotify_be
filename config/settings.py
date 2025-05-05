@@ -66,7 +66,7 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
+    ),
 }
 
 SIMPLE_JWT = {
@@ -79,17 +79,8 @@ SIMPLE_JWT = {
 
 AUTH_USER_MODEL = "api.User"
 
-# CSRF_TRUSTED_ORIGINS = [
-#     "http://localhost:3000",
-# ]
-
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:8000",  # địa chỉ React/Vue dev server
-# ]
-
-CORS_ALLOW_ALL_ORIGINS = True
-
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -97,8 +88,15 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
 ]
+
+# Cấu hình CORS
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = "config.urls"
 

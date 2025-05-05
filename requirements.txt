@@ -10,6 +10,7 @@ django-storages==1.14.6
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 jmespath==1.0.1
+mutagen==1.47.0
 mypy-extensions==1.0.0
 packaging==24.2
 pathspec==0.12.1

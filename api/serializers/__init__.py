@@ -1,6 +1,10 @@
-from .artist import ArtistSerializer
-from .genre import GenreSerializer
-from .album import AlbumSerializer
-from .track import TrackSerializer
-from .user import UserLoginSerializer, UserRegisterSerializer, LogoutSerializer
-from .library import LibrarySerializer
+from .artist_serializer import ArtistSerializer, ArtistDetailSerializer
+from .genre_serializer import GenreSerializer
+from .album_serializer import AlbumSerializer, AlbumDetailSerializer
+from .track_serializer import TrackSerializer, TrackDetailSerializer
+from .user_serializer import (
+    UserLoginSerializer,
+    UserRegisterSerializer,
+    LogoutSerializer,
+)
+from .library_serializer import LibrarySerializer

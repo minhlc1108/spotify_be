@@ -1,7 +1,7 @@
 from django import forms
 
-from .models import Album, Artist
-from .validators import validate_image
+from .models import Album, Artist, Track
+from .validators import validate_image, validate_audio
 
 
 class ArtistAdminForm(forms.ModelForm):
@@ -33,3 +33,27 @@ class AlbumAdminForm(forms.ModelForm):
             except forms.ValidationError as e:
                 raise forms.ValidationError(f"Ảnh không hợp lệ: {e}")
         return cover_image
+
+
+class TrackAdminForm(forms.ModelForm):
+    class Meta:
+        model = Track
+        fields = "__all__"
+
+    def clean_cover_image(self):
+        cover_image = self.cleaned_data.get("cover_image")
+        if cover_image:
+            try:
+                validate_image(cover_image)
+            except forms.ValidationError as e:
+                raise forms.ValidationError(f"Ảnh không hợp lệ: {e}")
+        return cover_image
+
+    def clean_audio_file(self):
+        audio_file = self.cleaned_data.get("audio_file")
+        if audio_file:
+            try:
+                validate_audio(audio_file)
+            except forms.ValidationError as e:
+                raise forms.ValidationError(f"File âm thanh không hợp lệ: {e}")
+        return audio_file

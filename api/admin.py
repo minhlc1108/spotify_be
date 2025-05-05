@@ -1,5 +1,5 @@
 from django.contrib import admin
-from api.admin_form import AlbumAdminForm, ArtistAdminForm
+from api.admin_form import AlbumAdminForm, ArtistAdminForm, TrackAdminForm
 from api.models import Artist, Album, Genre, Track
 from api.models.user import User
 
@@ -38,6 +38,7 @@ class AlbumAdmin(admin.ModelAdmin):
 
 
 class TrackAdmin(admin.ModelAdmin):
+    form = TrackAdminForm
     list_display = (
         "id",
         "title",

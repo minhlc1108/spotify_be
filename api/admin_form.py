@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Album, Artist, Track
+from .models import Album, Artist, Track,Library
 from .validators import validate_image, validate_audio
 
 
@@ -33,6 +33,12 @@ class AlbumAdminForm(forms.ModelForm):
             except forms.ValidationError as e:
                 raise forms.ValidationError(f"Ảnh không hợp lệ: {e}")
         return cover_image
+class LibraryAdminForm(forms.ModelForm):
+
+    class Meta:
+        model = Library
+        fields = "__all__"
+
 
 
 class TrackAdminForm(forms.ModelForm):

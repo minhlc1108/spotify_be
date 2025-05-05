@@ -11,6 +11,8 @@ from api.views import (
     LoginView,
     RegisterView,
     LogoutView,
+    LibraryDetailView,
+    LibraryListView
 )
 from rest_framework_simplejwt.views import TokenRefreshView
 
@@ -27,4 +29,6 @@ urlpatterns = [
     path("auth/login/", LoginView.as_view(), name="login"),
     path("auth/logout/", LogoutView.as_view(), name="logout"),
     path("auth/refreshToken/", TokenRefreshView.as_view(), name="refreshToken"),
+    path('library/', LibraryListView.as_view(), name='library-list'),
+    path('library/<int:pk>/', LibraryDetailView.as_view(), name='library-detail'),
 ]

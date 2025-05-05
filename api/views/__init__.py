@@ -3,3 +3,4 @@ from .genre import GenreListView, GenreDetailView
 from .album import AlbumListView, AlbumDetailView
 from .track import TrackListView, TrackDetailView
 from .user import LoginView, RegisterView, LogoutView
+from .library import LibraryDetailView, LibraryListView

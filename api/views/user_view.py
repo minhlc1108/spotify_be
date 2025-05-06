@@ -28,9 +28,13 @@ class RegisterView(generics.CreateAPIView):
         refresh_age = int(jwt_settings.REFRESH_TOKEN_LIFETIME.total_seconds())
         resp = Response(
             {
-                "user": serializer.data,
                 "access": access_token,
                 "refresh": refresh_token,
+                "user": {
+                    "id": user.id,
+                    "username": user.username,
+                    "email": user.email,
+                },
             },
             status=status.HTTP_201_CREATED,
         )

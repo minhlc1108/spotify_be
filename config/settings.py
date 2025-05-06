@@ -65,6 +65,7 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("api.authentication.CookieJWTAuthentication",),
+    "EXCEPTION_HANDLER": "api.exceptions.custom_exception_handler",
 }
 
 SIMPLE_JWT = {

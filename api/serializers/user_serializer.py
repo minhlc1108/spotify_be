@@ -34,31 +34,29 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 
 class UserLoginSerializer(serializers.Serializer):
-    username = serializers.CharField(required=False)
-    email = serializers.EmailField(required=False)
+    identifier = serializers.CharField()  # Chứa email hoặc username
     password = serializers.CharField(write_only=True)
 
     def validate(self, attrs):
-        # Cho phép login bằng email hoặc username
-        username = attrs.get("username")
-        email = attrs.get("email")
+        identifier = attrs.get("identifier")
         password = attrs["password"]
 
-        if email and not username:
-            # tìm user tương ứng email để lấy username
+        # Thử tìm theo email trước
+        user = None
+        if "@" in identifier:
             try:
-                u = User.objects.get(email=email)
-                username = u.username
+                user_obj = User.objects.get(email=identifier)
+                user = authenticate(username=user_obj.username, password=password)
             except User.DoesNotExist:
                 raise serializers.ValidationError(
                     "User with this email does not exist."
                 )
-        if not username:
-            raise serializers.ValidationError("Please provide username or email.")
+        else:
+            user = authenticate(username=identifier, password=password)
 
-        user = authenticate(username=username, password=password)
         if not user:
             raise serializers.ValidationError("Invalid credentials.")
+
         attrs["user"] = user
         return attrs
 

@@ -1,18 +1,20 @@
-from rest_framework import status, permissions 
+from rest_framework import status, permissions
 from rest_framework.response import Response
 from api.models import PlayState, Track
 from api.serializers import PlayStateSerializer
 from rest_framework.views import APIView
 
-class PlayStateView (APIView):
+
+class PlayStateView(APIView):
     serializer_class = PlayStateSerializer
     permission_classes = [permissions.IsAuthenticated]
+
     def get(self, request, *args, **kwargs):
         user = request.user
-        try:
-            play_state = PlayState.objects.get(user=user)
-        except PlayState.DoesNotExist:
-            return Response({"error": "PlayState not found"}, status=status.HTTP_404_NOT_FOUND)
+        play_state, created = PlayState.objects.get_or_create(user=user)
+        if created:
+            # Chỉ set mặc định nếu vừa tạo mới
+            play_state.save()
 
         serializer = PlayStateSerializer(play_state)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -39,14 +41,17 @@ class PlayStateView (APIView):
                 play_state.progress = data["progress"]
 
         # Các field khác
-        for field in ["is_looping", "is_shuffle", "volume", "context_id", "context_type", "position_in_context", "progress"]:
+        for field in [
+            "is_looping",
+            "is_shuffle",
+            "volume",
+            "context_id",
+            "context_type",
+            "position_in_context",
+            "progress",
+        ]:
             if field in data:
                 setattr(play_state, field, data[field])
 
         play_state.save()
         return Response(PlayStateSerializer(play_state).data, status=status.HTTP_200_OK)
-
-    
-
-
-    

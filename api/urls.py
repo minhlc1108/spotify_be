@@ -13,6 +13,8 @@ from api.views import (
     LogoutView,
     PlayStateView,
     CookieTokenRefreshView,
+    PlaylistListView,
+    PlaylistDetailView
 )
 
 urlpatterns = [
@@ -29,4 +31,6 @@ urlpatterns = [
     path("auth/logout/", LogoutView.as_view(), name="logout"),
     path ("playstate/", PlayStateView.as_view(),name ="playState"),
     path("auth/refreshToken/", CookieTokenRefreshView.as_view(), name="refreshToken"),
+    path("playlists/", PlaylistListView.as_view(), name="playlist-list"),
+    path("playlists/<uuid:pk>/", PlaylistDetailView.as_view(), name="playlist-detail"),
 ]

@@ -111,15 +111,18 @@ class LogoutView(generics.GenericAPIView):
     permission_classes = []
 
     def post(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        refresh_token = request.COOKIES.get("refreshToken")
+        if not refresh_token:
+            return Response(
+                {"detail": "Refresh token missing"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        serializer = self.get_serializer(token=refresh_token)
         serializer.save()
 
         response = Response(
             {"message": "Logout successful"}, status=status.HTTP_205_RESET_CONTENT
         )
-
-        # Xóa cookies JWT
         response.delete_cookie("accessToken")
         response.delete_cookie("refreshToken")
 

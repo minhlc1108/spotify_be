@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from mutagen import File as MutagenFile
 import uuid
 
 
@@ -17,12 +18,21 @@ class Track(models.Model):
     )
     artists = models.ManyToManyField("Artist", related_name="tracks")
     genres = models.ManyToManyField("Genre", related_name="tracks")
-    play_count = models.PositiveBigIntegerField(default=0)
-    duration = models.PositiveBigIntegerField(default=0)
+    play_count = models.PositiveBigIntegerField(default=0, editable=False)
+    duration = models.PositiveBigIntegerField(default=0, editable=False)
     release_date = models.DateField(default=timezone.now)
 
     def __str__(self):
         return f"{self.title} - {self.artists.first().name}"
+
+    def save(self, *args, **kwargs):
+        if self.audio_file:
+            try:
+                audio_file = MutagenFile(self.audio_file)
+                self.duration = audio_file.info.length  # thời lượng (giây)
+            except Exception as e:
+                print("Không thể lấy duration:", e)
+        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ["release_date"]

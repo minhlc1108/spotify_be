@@ -1,5 +1,6 @@
-from .artist import ArtistListView, ArtistDetailView
-from .genre import GenreListView, GenreDetailView
-from .album import AlbumListView, AlbumDetailView
-from .track import TrackListView, TrackDetailView
-from .user import LoginView, RegisterView, LogoutView
+from .artist_view import ArtistListView, ArtistDetailView
+from .genre_view import GenreListView, GenreDetailView
+from .album_view import AlbumListView, AlbumDetailView
+from .track_view import TrackListView, TrackDetailView
+from .user_view import LoginView, RegisterView, LogoutView, CookieTokenRefreshView
+from .play_state_view import PlayStateView

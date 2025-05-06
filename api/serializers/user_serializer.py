@@ -48,14 +48,14 @@ class UserLoginSerializer(serializers.Serializer):
                 user_obj = User.objects.get(email=identifier)
                 user = authenticate(username=user_obj.username, password=password)
             except User.DoesNotExist:
-                raise serializers.ValidationError(
-                    "User with this email does not exist."
-                )
+                raise serializers.ValidationError("User không tồn tại")
         else:
             user = authenticate(username=identifier, password=password)
 
         if not user:
-            raise serializers.ValidationError("Invalid credentials.")
+            raise serializers.ValidationError(
+                "Tài khoản hoặc mật khẩu không chính xác."
+            )
 
         attrs["user"] = user
         return attrs

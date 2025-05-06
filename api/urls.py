@@ -12,6 +12,7 @@ from api.views import (
     RegisterView,
     LogoutView,
 )
+from api.views.play_state_view import PlayStateUpdateView
 from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
@@ -27,4 +28,5 @@ urlpatterns = [
     path("auth/login/", LoginView.as_view(), name="login"),
     path("auth/logout/", LogoutView.as_view(), name="logout"),
     path("auth/refreshToken/", TokenRefreshView.as_view(), name="refreshToken"),
+    path("playstate/", PlayStateUpdateView.as_view(), name="playstate-update"),
 ]

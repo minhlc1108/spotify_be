@@ -33,7 +33,6 @@ class QueueAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "user",  # Assuming you want to display the user associated with the queue
-        "current_track",  # Assuming you want to display the current track
         "created_at",
     )
     search_fields = ("user__username",)  # Enable search by username of the user

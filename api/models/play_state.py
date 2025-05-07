@@ -24,7 +24,7 @@ class PlayState(models.Model):
     volume = models.PositiveIntegerField(
         default=70, validators=[MinValueValidator(0), MaxValueValidator(100)]
     )
-    context_id = models.UUIDField(default=uuid.uuid4, editable=False)
+    context_id = models.UUIDField(null=True, blank=True)
     context_type = models.CharField(
         max_length=20,
         choices=CONTEXT_TYPE_CHOICES,

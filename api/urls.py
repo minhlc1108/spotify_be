@@ -11,9 +11,11 @@ from api.views import (
     LoginView,
     RegisterView,
     LogoutView,
+    PlayStateView,
+    CookieTokenRefreshView,
+    SearchView,
     LibraryDetailView
 )
-from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
     path("artists/", ArtistListView.as_view(), name="artist-list"),
@@ -24,10 +26,12 @@ urlpatterns = [
     path("albums/<uuid:pk>/", AlbumDetailView.as_view(), name="artist-detail"),
     path("tracks/", TrackListView.as_view(), name="artist-list"),
     path("tracks/<uuid:pk>/", TrackDetailView.as_view(), name="artist-detail"),
+    path("search/", SearchView.as_view(), name="search"),
     path("auth/register/", RegisterView.as_view(), name="register"),
     path("auth/login/", LoginView.as_view(), name="login"),
     path("auth/logout/", LogoutView.as_view(), name="logout"),
-    path("auth/refreshToken/", TokenRefreshView.as_view(), name="refreshToken"),
+    path("playstate/", PlayStateView.as_view(), name="playState"),
+    path("auth/refreshToken/", CookieTokenRefreshView.as_view(), name="refreshToken"),
     # path('library/', LibraryListView.as_view(), name='library-list'),
     path('library/', LibraryDetailView.as_view(), name='library-detail'),
 ]

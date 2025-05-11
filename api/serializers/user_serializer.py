@@ -67,7 +67,12 @@ class LogoutSerializer(serializers.Serializer):
         super().__init__(*args, **kwargs)
 
     def save(self, **kwargs):
+        if not self.token:
+            raise serializers.ValidationError("Token is required.")
+
         try:
-            RefreshToken(self.token).blacklist()
-        except Exception:
-            raise serializers.ValidationError("Invalid or expired token")
+            # Chỉ gọi blacklisting khi token hợp lệ
+            refresh_token = RefreshToken(self.token)
+            refresh_token.blacklist()  # Đảm bảo token này được đưa vào blacklist
+        except Exception as e:
+            raise serializers.ValidationError(f"Invalid or expired token: {str(e)}")

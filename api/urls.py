@@ -13,9 +13,9 @@ from api.views import (
     LogoutView,
     PlayStateView,
     CookieTokenRefreshView,
-    PlaylistListView,
-    PlaylistDetailView
     SearchView,
+    PlaylistListView,
+    PlaylistDetailView,
 )
 
 urlpatterns = [

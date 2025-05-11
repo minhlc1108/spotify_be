@@ -14,7 +14,7 @@ from api.views import (
     PlayStateView,
     CookieTokenRefreshView,
     PlaylistListView,
-    PlaylistDetailView
+    PlaylistDetailView,
     SearchView,
 )
 

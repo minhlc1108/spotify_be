@@ -5,3 +5,4 @@ from .track_view import TrackListView, TrackDetailView
 from .user_view import LoginView, RegisterView, LogoutView, CookieTokenRefreshView
 from .playlist_view import PlaylistListView, PlaylistDetailView
 from .play_state_view import PlayStateView
+from .search_view import SearchView

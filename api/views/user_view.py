@@ -1,9 +1,11 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.settings import api_settings as jwt_settings
 from rest_framework_simplejwt.views import TokenRefreshView
-from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+from rest_framework_simplejwt.exceptions import InvalidToken
 from api.serializers import (
     UserRegisterSerializer,
     UserLoginSerializer,
@@ -110,9 +112,8 @@ class LoginView(generics.GenericAPIView):
         return resp
 
 
-class LogoutView(generics.GenericAPIView):
-    serializer_class = LogoutSerializer
-    permission_classes = []
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         refresh_token = request.COOKIES.get("refreshToken")
@@ -121,9 +122,12 @@ class LogoutView(generics.GenericAPIView):
                 {"detail": "Refresh token missing"}, status=status.HTTP_400_BAD_REQUEST
             )
 
-        serializer = self.get_serializer(token=refresh_token)
+        # Truyền refresh_token vào serializer
+        serializer = LogoutSerializer(data={}, token=refresh_token)
+        serializer.is_valid(raise_exception=True)
         serializer.save()
 
+        # Xóa cookie
         response = Response(
             {"message": "Logout successful"}, status=status.HTTP_205_RESET_CONTENT
         )
@@ -135,21 +139,41 @@ class LogoutView(generics.GenericAPIView):
 
 class CookieTokenRefreshView(TokenRefreshView):
     def post(self, request, *args, **kwargs):
+        # Lấy refresh token từ cookie
         refresh_token = request.COOKIES.get("refreshToken")
         if not refresh_token:
             return Response(
-                {"detail": "No refresh token in cookies"},
+                {"message": "Không tìm thấy refresh token trong cookie."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+        # Gửi refresh token để nhận access token mới
         serializer = self.get_serializer(data={"refresh": refresh_token})
 
         try:
             serializer.is_valid(raise_exception=True)
         except InvalidToken:
             return Response(
-                {"detail": "Invalid or expired refresh token"},
+                {"message": "Refresh token không hợp lệ hoặc đã hết hạn."},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
-        return Response(serializer.validated_data, status=status.HTTP_200_OK)
+        # Trả về access token mới
+        resp = Response(
+            {
+                "access": serializer.validated_data.get("access"),
+                "message": "Làm mới access token thành công.",
+            },
+            status=status.HTTP_200_OK,
+        )
+
+        max_age = int(jwt_settings.ACCESS_TOKEN_LIFETIME.total_seconds())
+        resp.set_cookie(
+            "accessToken",
+            serializer.validated_data.get("access"),
+            httponly=True,
+            secure=True,
+            samesite="Lax",
+            max_age=max_age,
+        )
+        return resp

@@ -1,23 +1,18 @@
-
 from api.validators import validate_image
 from rest_framework import serializers
 from api.models.play_state import PlayState
 from api.models.track import Track
 
-from api.serializers.track_serializer import TrackSerializer  # Nhớ import đúng
+from api.serializers.track_serializer import (
+    TrackDetailSerializer,
+    TrackSerializer,
+)  # Nhớ import đúng
 
-from rest_framework.views import APIView
 from rest_framework import serializers
 
 
-class TrackSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Track
-        fields = '__all__'  # hoặc chọn các field cần thiết như ['id', 'title', 'artist', ...]
-
-
 class PlayStateSerializer(serializers.ModelSerializer):
-    current_track = TrackSerializer(read_only=True)
+    current_track = TrackDetailSerializer(read_only=True)
 
     class Meta:
         model = PlayState
@@ -33,6 +28,8 @@ class PlayStateSerializer(serializers.ModelSerializer):
             "position_in_context",
             "last_updated",
         ]
+
+
 class PlayStateUpdateSerializer(serializers.ModelSerializer):
     current_track = serializers.PrimaryKeyRelatedField(
         queryset=Track.objects.all(), required=False, allow_null=True
@@ -52,6 +49,3 @@ class PlayStateUpdateSerializer(serializers.ModelSerializer):
             "position_in_context",
             "last_updated",
         ]
-
-
-

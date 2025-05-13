@@ -14,7 +14,8 @@ from api.views import (
     PlayStateView,
     CookieTokenRefreshView,
     SearchView,
-    LibraryDetailView
+    LibraryView,
+    LibrarySearchView
 )
 
 urlpatterns = [
@@ -33,5 +34,8 @@ urlpatterns = [
     path("playstate/", PlayStateView.as_view(), name="playState"),
     path("auth/refreshToken/", CookieTokenRefreshView.as_view(), name="refreshToken"),
     # path('library/', LibraryListView.as_view(), name='library-list'),
-    path('library/', LibraryDetailView.as_view(), name='library-detail'),
+    path('library/', LibraryView.as_view(), name='library'),
+    path('library-search/', LibrarySearchView.as_view(), name='library-search'),
+
+
 ]

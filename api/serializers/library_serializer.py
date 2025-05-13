@@ -12,7 +12,6 @@ class LibrarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Library
         fields = [
-            "user",
             "liked_tracks",
             "saved_albums",
             "followed_artists",

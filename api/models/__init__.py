@@ -5,4 +5,6 @@ from .track import Track
 from .album import Album
 from .playlist import Playlist, PlaylistTrack
 from .library import Library
+from .play_history import PlayHistory
 from .play_state import PlayState
+from .queue import Queue, QueueTrack

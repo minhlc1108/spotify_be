@@ -18,7 +18,7 @@ class Playlist(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.title} - {self.owner.first().display_name}"
+        return f"{self.title} - {self.owner.username}"
 
     class Meta:
         ordering = ["created_at"]

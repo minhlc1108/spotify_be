@@ -1,8 +1,8 @@
 from rest_framework import status, permissions
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from api.models import PlayState, Track
 from api.serializers import PlayStateSerializer
+from rest_framework.views import APIView
 
 
 class PlayStateView(APIView):
@@ -13,7 +13,9 @@ class PlayStateView(APIView):
         user = request.user
         play_state, created = PlayState.objects.get_or_create(user=user)
         if created:
+            # Chỉ set mặc định nếu vừa tạo mới
             play_state.save()
+
         serializer = PlayStateSerializer(play_state)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

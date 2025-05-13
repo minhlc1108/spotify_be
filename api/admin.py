@@ -1,6 +1,11 @@
 from django.contrib import admin
-from api.admin_form import AlbumAdminForm, ArtistAdminForm, TrackAdminForm
-from api.models import Artist, Album, Genre, Track
+from api.admin_form import AlbumAdminForm, ArtistAdminForm, TrackAdminForm, LibraryAdminForm
+
+from api.models.album import Album
+from api.models.artist import Artist
+from api.models.genre import Genre
+from api.models.library import Library
+from api.models.track import Track
 from api.models.user import User
 
 # Register your models here.
@@ -17,6 +22,12 @@ class ArtistAdmin(admin.ModelAdmin):
     )  # Hiển thị các trường bạn muốn trong danh sáchg
     search_fields = ("name", "bio")
     list_filter = ("gender",)
+class LibraryAdmin(admin.ModelAdmin):
+    form = LibraryAdminForm
+    list_display = (
+        "user",
+    )  # Hiển thị các trường bạn muốn trong danh sách
+    search_fields = ("user",)
 
 
 class AlbumAdmin(admin.ModelAdmin):
@@ -61,3 +72,4 @@ admin.site.register(Genre)
 admin.site.register(Album, AlbumAdmin)
 admin.site.register(Track, TrackAdmin)
 admin.site.register(User)
+admin.site.register(Library,LibraryAdmin)

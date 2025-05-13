@@ -8,3 +8,4 @@ from .user_serializer import (
     UserRegisterSerializer,
     LogoutSerializer,
 )
+from .library_serializer import LibrarySerializer

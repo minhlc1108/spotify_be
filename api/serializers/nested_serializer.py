@@ -21,15 +21,4 @@ class SimpleTrackSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Track
-        fields = [
-            "id",
-            "title",
-            "duration",
-            "artists",
-            "audio_file",
-            "video_file",
-            "album",
-            "cover_image",
-            "genres",
-            "play_count",
-        ]
+        fields = ["id", "title", "duration", "artists", "cover_image"]

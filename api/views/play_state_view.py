@@ -22,20 +22,31 @@ class PlayStateView(APIView):
         data = request.data
         play_state, _ = PlayState.objects.get_or_create(user=user)
 
-        # Cập nhật track nếu có
         track_id = data.get("current_track")
+        is_playing = data.get("is_playing")
+
+        # Gắn cờ nếu bài hát thay đổi
+        track_changed = False
+
         if track_id:
             try:
-                play_state.current_track = Track.objects.get(id=track_id)
+                new_track = Track.objects.get(id=track_id)
+                if play_state.current_track != new_track:
+                    play_state.current_track = new_track
+                    track_changed = True
             except Track.DoesNotExist:
                 return Response({"error": "Track not found"}, status=404)
 
-        # Nếu người dùng gửi trạng thái chơi
         if "is_playing" in data:
-            play_state.is_playing = data["is_playing"]
+            play_state.is_playing = is_playing
 
-            # Nếu là pause, lưu lại progress nếu có
-            if not data["is_playing"] and "progress" in data:
+            # Nếu chuyển sang trạng thái đang phát và bài hát mới -> tăng play_count
+            if is_playing and track_changed:
+                play_state.current_track.play_count += 1
+                play_state.current_track.save()
+
+            # Nếu pause, lưu lại progress nếu có
+            elif not is_playing and "progress" in data:
                 play_state.progress = data["progress"]
 
         # Các field khác

@@ -21,7 +21,17 @@ class SimpleTrackSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Track
-        fields = ["id", "title", "duration", "artists", "cover_image","audio_file","video_file"]
+        fields = [
+            "id",
+            "title",
+            "duration",
+            "artists",
+            "cover_image",
+            "audio_file",
+            "video_file",
+        ]
+
+
 class SimpleLibrarySerializer(serializers.ModelSerializer):
     liked_tracks = SimpleTrackSerializer(many=True, read_only=True)
     saved_albums = SimpleAlbumSerializer(many=True, read_only=True)
@@ -41,11 +51,12 @@ class SimpleLibrarySerializer(serializers.ModelSerializer):
             "album",
             "genres",
             "play_count",
-
         ]
+
 
 class SimplePlaylistSerializer(serializers.ModelSerializer):
     tracks = SimpleTrackSerializer(many=True, read_only=True)
+
     class Meta:
         model = Library
-        fields = ['id', 'name', 'tracks']
+        fields = ["id", "name", "tracks"]

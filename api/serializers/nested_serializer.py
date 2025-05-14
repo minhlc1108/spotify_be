@@ -31,11 +31,17 @@ class SimpleLibrarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Library
         fields = [
-            'user',
-            'liked_tracks',
-            'saved_albums',
-            'followed_artists',
-            'saved_playlists',
+            "id",
+            "title",
+            "duration",
+            "artists",
+            "cover_image",
+            "audio_file",
+            "video_file",
+            "album",
+            "genres",
+            "play_count",
+
         ]
 
 class SimplePlaylistSerializer(serializers.ModelSerializer):

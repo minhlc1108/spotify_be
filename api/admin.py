@@ -6,7 +6,6 @@ from api.models.artist import Artist
 from api.models.genre import Genre
 from api.models.library import Library
 from api.models.track import Track
-from api.models.queue import Queue
 
 from api.models.user import User
 from api.models import Playlist
@@ -71,8 +70,7 @@ class TrackAdmin(admin.ModelAdmin):
 
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(Genre)
-admin.site.register(Playlist, PlaylistAdmin)
-admin.site.register(Queue, QueueAdmin)
+admin.site.register(Playlist)
 admin.site.register(Album, AlbumAdmin)
 admin.site.register(Track, TrackAdmin)
 admin.site.register(User)

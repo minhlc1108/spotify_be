@@ -1,11 +1,12 @@
-
 from api.validators import validate_image
 from rest_framework import serializers
 from api.models.play_state import PlayState
 from api.serializers.track_serializer import TrackSerializer  # Nhớ import đúng
 
+
 class PlayStateSerializer(serializers.ModelSerializer):
-    
+
+    current_track = TrackSerializer(read_only=True)
 
     class Meta:
         model = PlayState

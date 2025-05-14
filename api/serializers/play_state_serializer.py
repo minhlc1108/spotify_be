@@ -3,14 +3,16 @@ from rest_framework import serializers
 from api.models.play_state import PlayState
 from api.models.track import Track
 
-from api.serializers.track_serializer import TrackSerializer  # Nhớ import đúng
+from api.serializers.track_serializer import (
+    TrackDetailSerializer,
+    TrackSerializer,
+)  # Nhớ import đúng
 
-from rest_framework.views import APIView
 from rest_framework import serializers
 
 
 class PlayStateSerializer(serializers.ModelSerializer):
-    current_track = TrackSerializer(read_only=True)
+    current_track = TrackDetailSerializer(read_only=True)
 
     class Meta:
         model = PlayState

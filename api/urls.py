@@ -13,13 +13,14 @@ from api.views import (
     LogoutView,
     PlayStateView,
     CookieTokenRefreshView,
+    PlaylistListView,
+    PlaylistDetailView,
     SearchView,
     LibraryView,
     LibrarySearchView
 )
 
 urlpatterns = [
-    path("search/", SearchView.as_view(), name="search"),
     path("artist/", ArtistListView.as_view(), name="artist-list"),
     path("artist/<uuid:pk>/", ArtistDetailView.as_view(), name="artist-detail"),
     path("genre/", GenreListView.as_view(), name="artist-list"),
@@ -28,6 +29,7 @@ urlpatterns = [
     path("album/<uuid:pk>/", AlbumDetailView.as_view(), name="artist-detail"),
     path("track/", TrackListView.as_view(), name="artist-list"),
     path("track/<uuid:pk>/", TrackDetailView.as_view(), name="artist-detail"),
+    path("search/", SearchView.as_view(), name="search"),
     path("auth/register/", RegisterView.as_view(), name="register"),
     path("auth/login/", LoginView.as_view(), name="login"),
     path("auth/logout/", LogoutView.as_view(), name="logout"),
@@ -38,4 +40,7 @@ urlpatterns = [
     path('library-search/', LibrarySearchView.as_view(), name='library-search'),
 
 
+    path("playlists/", PlaylistListView.as_view(), name="playlist-list"),
+    path("playlists/<uuid:pk>/", PlaylistDetailView.as_view(), name="playlist-detail"),
+    path("playlists/<uuid:pk>/tracks/", PlaylistDetailView.as_view(), name="playlist-add-track"),
 ]

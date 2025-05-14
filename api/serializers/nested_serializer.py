@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Artist, Track, Album, Library
+from api.models import Artist, Track, Album, Library, Playlist
 
 
 class SimpleArtistSerializer(serializers.ModelSerializer):
@@ -41,16 +41,11 @@ class SimpleLibrarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Library
         fields = [
-            "id",
-            "title",
-            "duration",
-            "artists",
-            "cover_image",
-            "audio_file",
-            "video_file",
-            "album",
-            "genres",
-            "play_count",
+            'user',
+            'liked_tracks',
+            'saved_albums',
+            'followed_artists',
+            'saved_playlists',
         ]
 
 
@@ -58,5 +53,6 @@ class SimplePlaylistSerializer(serializers.ModelSerializer):
     tracks = SimpleTrackSerializer(many=True, read_only=True)
 
     class Meta:
-        model = Library
-        fields = ["id", "name", "tracks"]
+
+        model = Playlist
+        fields = ['title', 'cover_image', 'tracks']

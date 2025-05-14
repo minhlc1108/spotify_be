@@ -19,7 +19,9 @@ class Album(models.Model):
     release_date = models.DateField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.title} - {self.artists.first().name}"
+        first_artist = self.artists.first()
+        artist_name = first_artist.name if first_artist else "Unknown Artist"
+        return f"{self.title} - {artist_name}"
 
     class Meta:
         ordering = ["release_date"]
